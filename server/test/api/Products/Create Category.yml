@@ -1,14 +1,18 @@
 info:
-  name: Get Profile
+  name: Create Category
   type: http
-  seq: 3
+  seq: 4
 
 http:
-  method: GET
-  url: http://localhost:3001/auth/profile
-  headers:
-    - name: Authorization
-      value: Bearer {{token}}
+  method: POST
+  url: http://localhost:3001/api/products/create-category
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Cerveza",
+        "description": "Bebidas refrescantes y saludables"
+      }
   auth:
     type: bearer
     token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYzlhOGM3Yi1mMzlhLTQzYzktOTAyMi0zYmY4MTIxMjM5MDciLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NzU1NDM0LCJleHAiOjE3NzUzNjAyMzR9.p-8QsQU-oxe4hECWb326DXEmkGgEBA5novjlLBaHuVY

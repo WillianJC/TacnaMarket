@@ -1,0 +1,55 @@
+info:
+  name: Create Product
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: {{url}}/api/products
+  headers:
+    Content-Type: application/json
+    Authorization: 'Bearer {{token}}'
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Manzana Roja",
+        "description": "Manzanas rojas frescas",
+        "price": 2.99,
+        "stock": 150,
+        "image": "https://ejemplo.com/images/manzana.jpg",
+        "categoryId": "{{categoryId}}"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+tests: |
+  test("Status code should be 201 (Created)", function() {
+    expect(res.getStatus()).toBe(201);
+  });
+
+  test("Response should have required product fields", function() {
+    const response = res.getBody();
+    expect(response).toHaveProperty("id");
+    expect(response).toHaveProperty("name");
+    expect(response).toHaveProperty("description");
+    expect(response).toHaveProperty("price");
+    expect(response).toHaveProperty("stock");
+    expect(response).toHaveProperty("categoryId");
+    expect(response).toHaveProperty("createdAt");
+    expect(response).toHaveProperty("updatedAt");
+    expect(response.name).toBe("Manzana Roja");
+    expect(response.price).toBe(2.99);
+    expect(response.stock).toBe(100);
+  });
+
+  test("Product ID should be saved to environment", function() {
+    const productId = res.getBody().id;
+    bru.setEnvVar("productId", productId);
+    expect(productId).toBeDefined();
+  });
