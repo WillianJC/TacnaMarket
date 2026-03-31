@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  workflow_run:
+    workflows: ["Validate Server & Client"]
+    branches: ["main"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Deploy server on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            cd ~/projects/TacnaMarket
+            git pull origin main
+            docker compose up --build -d
