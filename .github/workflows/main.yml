@@ -38,6 +38,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Generar imagen del Servidor (NestJS)
       - name: Build and push Server Docker image
         uses: docker/build-push-action@v6
         with:
@@ -45,13 +46,14 @@ jobs:
           push: true
           tags: ghcr.io/${{ steps.owner.outputs.value }}/tacnamarket-server:latest
 
-      # --- CAMBIO 2: GENERAR IMAGEN DEL CLIENTE (NUEVO) ---
+      # Generar imagen del Cliente (React) - ¡ESTO ES LO NUEVO!
       - name: Build and push Client Docker image
         uses: docker/build-push-action@v6
         with:
           context: ./client
           push: true
           tags: ghcr.io/${{ steps.owner.outputs.value }}/tacnamarket-client:latest
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -68,17 +70,19 @@ jobs:
           envs: GHCR_TOKEN,REGISTRY_USER,IMAGE_OWNER
           script: |
             set -e
+            # Iniciar sesión en el registro de GitHub dentro del servidor
             echo "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
             
+            # Ir a la carpeta del proyecto y actualizar el código base
             cd ~/projects/TacnaMarket
             git pull origin main
             
-            # --- CAMBIO 3: DESCARGAR AMBAS IMÁGENES (NUEVO) ---
+            # Descargar las versiones más recientes de las imágenes
             IMAGE_PATH_LOWER=$(echo "$IMAGE_OWNER" | tr '[:upper:]' '[:lower:]')
             docker pull ghcr.io/$IMAGE_PATH_LOWER/tacnamarket-server:latest
             docker pull ghcr.io/$IMAGE_PATH_LOWER/tacnamarket-client:latest
             
-            # Levantar todo (Server + Client)
+            # Reiniciar los contenedores con las nuevas imágenes
             docker compose up -d
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
