@@ -33,11 +33,11 @@ import { DatabaseSeederService } from './database/database-seeder.service';
 
         return {
           ...base,
-          host: config.get<string>('POSTGRES_HOST'),
-          port: config.get<number>('POSTGRES_PORT'),
-          database: config.get<string>('POSTGRES_DB'),
-          username: config.get<string>('POSTGRES_USER'),
-          password: config.get<string>('POSTGRES_PASSWORD'),
+          host: config.get<string>('DB_HOST') || config.get<string>('POSTGRES_HOST'),
+          port: Number(config.get<string>('DB_PORT') || config.get<string>('POSTGRES_PORT') || 5432),
+          database: config.get<string>('DB_DATABASE') || config.get<string>('POSTGRES_DB'),
+          username: config.get<string>('DB_USERNAME') || config.get<string>('POSTGRES_USER'),
+          password: config.get<string>('DB_PASSWORD') || config.get<string>('POSTGRES_PASSWORD'),
           ssl,
         };
       },
