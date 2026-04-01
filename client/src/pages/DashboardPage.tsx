@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Importamos el navegador
+import { useCart } from '../context/CartContext'; // 2. Importamos el carrito global
 import Sidenav from '../components/layout/Sidenav';
 import CategorySidebar from '../components/products/CategorySidebar';
 import './DashboardPage.css';
 
-// Definimos qué forma tiene un Producto para TypeScript
+// Interfaz para los productos
 interface Product {
   id: string;
   name: string;
@@ -14,35 +16,34 @@ interface Product {
 }
 
 export default function DashboardPage() {
+  const navigate = useNavigate(); // Inicializamos el navegador
+  
+  // Usamos el Carrito Global del Context en lugar de un estado local
+  const { cart, addToCart, totalPrice } = useCart(); 
+
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('Frutas');
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Función para traer productos desde NestJS filtrados por categoría
- const fetchProducts = async (categoryName: string) => {
-  setLoading(true);
-  try {
-    const response = await fetch(`http://localhost:3001/api/products/category/${categoryName}`);
-    const result = await response.json();
-    
-    // CAMBIO AQUÍ: Antes teníamos setProducts(data), 
-    // ahora debe ser setProducts(result.data) porque la API lo manda así.
-    setProducts(result.data || []); 
-    
-  } catch (error) {
-    console.error("Error al cargar productos:", error);
-    setProducts([]);
-  } finally {
-    setLoading(false);
-  }
-};
+  // Cargar productos desde la API de NestJS
+  const fetchProducts = async (categoryName: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:3001/api/products/category/${categoryName}`);
+      const result = await response.json();
+      setProducts(result.data || []); 
+    } catch (error) {
+      console.error("Error al conectar con la API:", error);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Cargar "Frutas" por defecto al entrar a la página
   useEffect(() => {
     fetchProducts(selectedCategory);
   }, []);
 
-  // Esta función se ejecuta cuando haces clic en el Sidebar
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     fetchProducts(category);
@@ -50,46 +51,78 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard">
-      {/* 1. Menú lateral negro principal */}
+      {/* 1. Menú Lateral Negro */}
       <Sidenav />
 
       <main className="dashboard__main">
-        {/* 2. Sidebar de categorías (Pasamos la función para que funcione el clic) */}
-        <CategorySidebar onCategorySelect={handleCategoryChange} activeCategory={selectedCategory} />
+        {/* 2. Filtros de Categoría */}
+        <CategorySidebar 
+          onCategorySelect={handleCategoryChange} 
+          activeCategory={selectedCategory} 
+        />
 
-        {/* 3. Panel de productos (El espacio blanco de tu dibujo) */}
         <section className="dashboard__content">
+          
+          {/* Header con el botón que AHORA SÍ funciona */}
           <header className="content__header">
-            <h1 className="content__title">{selectedCategory.toUpperCase()}</h1>
-            <div className="content__divider"></div>
+            <div className="header__info">
+              <h1 className="content__title">{selectedCategory.toUpperCase()}</h1>
+              <p className="content__subtitle">{products.length} productos en stock</p>
+            </div>
+
+            <div className="cart-summary-bar">
+              <div className="cart-info">
+                <span className="cart-count">🛒 {cart.length} ítems</span>
+                <span className="cart-total">Total: <strong>S/ {totalPrice.toFixed(2)}</strong></span>
+              </div>
+              
+              {/* BOTÓN CORREGIDO: Ahora tiene el onClick para navegar */}
+              <button 
+                className="btn-view-cart"
+                onClick={() => navigate('/cart')} 
+              >
+                Ver Carrito
+              </button>
+            </div>
           </header>
 
+          <div className="content__divider"></div>
+
           {loading ? (
-            <div className="loading">Cargando productos de Tacna Market...</div>
+            <div className="loading-state">Cargando Tacna Market...</div>
           ) : (
             <div className="product-grid">
               {products.length > 0 ? (
                 products.map((product) => (
                   <div key={product.id} className="product-card">
-                    {/* Imagen de S3 */}
                     <div className="product-card__image-container">
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
                         className="product-card__image"
-                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image'; }}
+                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150'; }}
                       />
                     </div>
                     
                     <div className="product-card__info">
                       <h3 className="product-card__name">{product.name}</h3>
-                      <p className="product-card__price">S/ {product.price}</p>
-                      <button className="product-card__button">Agregar</button>
+                      <p className="product-card__description">{product.description}</p>
+                      <div className="product-card__footer">
+                        <span className="product-card__price">S/ {parseFloat(product.price).toFixed(2)}</span>
+                        
+                        {/* BOTÓN CORREGIDO: Usa addToCart del Context */}
+                        <button 
+                          className="product-card__add-btn"
+                          onClick={() => addToCart(product)}
+                        >
+                          Agregar
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="no-products">No hay productos en esta categoría aún.</p>
+                <p>No hay productos en esta categoría.</p>
               )}
             </div>
           )}
