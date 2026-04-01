@@ -38,12 +38,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Server Docker image
         uses: docker/build-push-action@v6
         with:
           context: ./server
           push: true
           tags: ghcr.io/${{ steps.owner.outputs.value }}/tacnamarket-server:latest
+
+      # --- CAMBIO 2: GENERAR IMAGEN DEL CLIENTE (NUEVO) ---
+      - name: Build and push Client Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./client
+          push: true
+          tags: ghcr.io/${{ steps.owner.outputs.value }}/tacnamarket-client:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,9 +69,16 @@ jobs:
           script: |
             set -e
             echo "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
+            
             cd ~/projects/TacnaMarket
             git pull origin main
-            docker pull ghcr.io/$(echo "$IMAGE_OWNER" | tr '[:upper:]' '[:lower:]')/tacnamarket-server:latest
+            
+            # --- CAMBIO 3: DESCARGAR AMBAS IMÁGENES (NUEVO) ---
+            IMAGE_PATH_LOWER=$(echo "$IMAGE_OWNER" | tr '[:upper:]' '[:lower:]')
+            docker pull ghcr.io/$IMAGE_PATH_LOWER/tacnamarket-server:latest
+            docker pull ghcr.io/$IMAGE_PATH_LOWER/tacnamarket-client:latest
+            
+            # Levantar todo (Server + Client)
             docker compose up -d
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
