@@ -6,6 +6,7 @@ import {
   ShoppingBagIcon,
 } from '@heroicons/react/24/outline'
 import { getProfile, login, register } from '../../services/authService'
+import { useNavigate } from 'react-router-dom';
 
 type InputProps = {
   id: string
@@ -41,6 +42,7 @@ function AuthInput({ id, label, type, placeholder, value, Icon, onChange }: Inpu
 }
 
 export default function AuthForm() {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true)
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
@@ -48,7 +50,7 @@ export default function AuthForm() {
   const [address, setAddress] = useState('')
   const [agreeTerms, setAgreeTerms] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleResponse = async () => {
     const token = localStorage.getItem('tacna_access_token')
@@ -57,6 +59,12 @@ export default function AuthForm() {
     try {
       const profile = await getProfile(token)
       setStatusMessage(`Bienvenido ${profile.name}, autenticación exitosa.`)
+
+      // PASO 3: Redirigir después de obtener el perfil
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500); // Esperamos 1.5 segundos para que el usuario vea el mensaje de éxito
+
     } catch (error) {
       console.error(error)
       setStatusMessage('No se pudo obtener el perfil después del login.')
@@ -70,7 +78,6 @@ export default function AuthForm() {
       setStatusMessage('Debes aceptar los términos y condiciones.')
       return
     }
-
     setIsLoading(true)
     setStatusMessage('')
 
@@ -79,14 +86,14 @@ export default function AuthForm() {
         const data = await login({ username, password })
         localStorage.setItem('tacna_access_token', data.access_token)
         setStatusMessage('Login exitoso')
-        await handleResponse()
+        await handleResponse() // Esto llamará a handleResponse y luego a navigate
       } else {
         const payload = { name, username, password, address }
         const data = await register(payload)
         localStorage.setItem('tacna_access_token', data.access_token)
         setStatusMessage('Registro exitoso. Has iniciado sesión.')
-        setIsLogin(true)
-        await handleResponse()
+        // También puedes redirigir aquí si quieres que entre directo al dashboard tras registrarse
+        setTimeout(() => navigate('/dashboard'), 1500);
       }
     } catch (error: any) {
       setStatusMessage(error.message || 'Error de autenticación')
@@ -94,7 +101,6 @@ export default function AuthForm() {
       setIsLoading(false)
     }
   }
-
   return (
     <section className="auth-form-card">
       <div className="brand-header">

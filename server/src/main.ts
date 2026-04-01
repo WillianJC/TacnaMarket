@@ -7,6 +7,11 @@ async function bootstrap() {
   const port = process.env.NEST_PORT || 3000;
   const production = process.env.PRODUCTION_MODE === 'true';
   const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+  app.enableCors({
+    origin: [corsOrigin, 'http://localhost:5173'], // Permitimos tu React
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(port, '0.0.0.0');
 
