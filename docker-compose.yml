@@ -1,5 +1,6 @@
 services:
   server:
+    image: ghcr.io/willianjc/tacnamarket-server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
