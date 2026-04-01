@@ -9,3 +9,14 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+
+  client:
+    image: ghcr.io/willianjc/tacnamarket-client:latest
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "${CLIENT_PORT:-5173}:80"
+    depends_on:
+      - server
+    restart: unless-stopped
