@@ -8,7 +8,7 @@ async function bootstrap() {
   const production = process.env.PRODUCTION_MODE === 'true';
   const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   const logger = new Logger('Bootstrap');
 
