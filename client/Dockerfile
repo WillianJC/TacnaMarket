@@ -1,14 +1,16 @@
-
-FROM oven-sh/bun:latest AS build
+# 1. Etapa de Build (Corregido el nombre de la imagen)
+FROM oven/bun:latest AS build
 WORKDIR /app
-COPY package.json bun.lockb ./
+
+# Nota: Asegúrate de que tu archivo se llame bun.lockb o bun.lock
+# Si usas el estándar de bun es bun.lockb
+COPY package.json bun.lockb ./ 
 RUN bun install
 COPY . .
 RUN bun run build
 
+# 2. Etapa de Producción (Nginx)
 FROM nginx:alpine
-# Copiamos los archivos de la carpeta 'dist' que genera Vite
 COPY --from=build /app/dist /usr/share/nginx/html
-# Exponemos el puerto 80
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
