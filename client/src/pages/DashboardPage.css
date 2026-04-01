@@ -1,13 +1,17 @@
 .dashboard {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
-  text-align: left;
-  background: #f9fafb;
 }
 
 .dashboard__main {
   flex: 1;
-  padding: 32px;
-  background: #f9fafb;
+  display: flex; /* Esto pone el Sidebar y el Contenido uno al lado del otro */
+  background-color: #ffffff;
+}
+
+.dashboard__content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto; /* Para que puedas bajar si hay muchos productos */
 }

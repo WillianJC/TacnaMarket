@@ -27,8 +27,12 @@ export class Product {
   @Column()
   categoryId: string;
 
+  @Column({ name: 'imageUrl', nullable: true })
+  imageUrl: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
 
   @Column({
     type: 'timestamp',
