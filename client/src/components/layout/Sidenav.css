@@ -1,0 +1,144 @@
+/* === Sidenav === */
+.sidenav {
+  --sn-bg: #16171d;
+  --sn-border: #2e303a;
+  --sn-accent: #aa3bff;
+  --sn-accent-bg: rgba(170, 59, 255, 0.12);
+  --sn-text: #9ca3af;
+  --sn-text-strong: #f3f4f6;
+  --sn-width: 220px;
+  --sn-width-collapsed: 64px;
+  --sn-transition: 0.25s ease;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: var(--sn-width);
+  min-height: 100vh;
+  background: var(--sn-bg);
+  border-right: 1px solid var(--sn-border);
+  transition: width var(--sn-transition);
+  overflow: hidden;
+}
+
+.sidenav--collapsed {
+  width: var(--sn-width-collapsed);
+}
+
+/* Toggle button */
+.sidenav__toggle {
+  position: absolute;
+  top: 18px;
+  right: -14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--sn-bg);
+  border: 1px solid var(--sn-border);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--sn-text);
+  transition: color var(--sn-transition), border-color var(--sn-transition);
+  padding: 0;
+}
+
+.sidenav__toggle:hover {
+  color: var(--sn-accent);
+  border-color: var(--sn-accent);
+}
+
+.sidenav__toggle-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Logo */
+.sidenav__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--sn-border);
+  min-height: 64px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidenav__logo-img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px var(--sn-accent));
+}
+
+.sidenav__logo-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sn-text-strong);
+  letter-spacing: 0.01em;
+  transition: opacity var(--sn-transition);
+}
+
+.sidenav--collapsed .sidenav__logo-text {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Nav */
+.sidenav__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 8px;
+  flex: 1;
+}
+
+/* Items */
+.sidenav__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--sn-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: background var(--sn-transition), color var(--sn-transition);
+}
+
+.sidenav__item:hover {
+  background: var(--sn-accent-bg);
+  color: var(--sn-accent);
+}
+
+.sidenav__item-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sidenav__item-label {
+  transition: opacity var(--sn-transition);
+}
+
+.sidenav--collapsed .sidenav__item-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Footer / Signout */
+.sidenav__footer {
+  padding: 8px 8px 16px;
+  border-top: 1px solid var(--sn-border);
+}
+
+.sidenav__item--signout:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+}
