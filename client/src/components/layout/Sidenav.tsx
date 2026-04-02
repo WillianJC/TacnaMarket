@@ -58,7 +58,13 @@ export default function Sidenav() {
 
       {/* Footer / Cerrar Sesión */}
       <div className="sidenav__footer">
-        <div className="sidenav__item sidenav__item--signout" onClick={() => navigate('/auth')}>
+        <div 
+          className="sidenav__item sidenav__item--signout" 
+          onClick={() => {
+            localStorage.removeItem('tacna_access_token'); // misma clave que AuthForm
+            navigate('/auth');
+        }}
+        >
           <ArrowLeftStartOnRectangleIcon className="sidenav__item-icon" />
           {!collapsed && <span className="sidenav__item-label">Cerrar sesión</span>}
         </div>

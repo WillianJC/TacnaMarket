@@ -1,20 +1,35 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import AuthPage from '../pages/AuthPage'
-import DashboardPage from '../pages/DashboardPage'
-import CartPage from '../pages/CartPage'; 
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import AuthPage from '../pages/AuthPage';
+import DashboardPage from '../pages/DashboardPage';
+import CartPage from '../pages/CartPage';
+import ProtectedRoute from './ProtectedRoute';
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        
-        {/* AGREGAMOS LA RUTA DEL CARRITO AQUÍ */}
-        <Route path="/cart" element={<CartPage />} /> 
+        {/* Redirige "/" directo al login */}
+        <Route path="/" element={<Navigate to="/auth" replace />} />
 
-        {/* El comodín "*" siempre debe ir al final */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Ruta pública */}
+        <Route path="/auth" element={<AuthPage />} />
+
+        {/* Rutas protegidas */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/cart" element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        } />
+
+        {/* Cualquier ruta desconocida → login */}
+        <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
