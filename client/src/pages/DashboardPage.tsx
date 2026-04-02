@@ -77,9 +77,9 @@ export default function DashboardPage() {
               </div>
               
               {/* BOTÓN CORREGIDO: Ahora tiene el onClick para navegar */}
-              <button 
+              <button
                 className="btn-view-cart"
-                onClick={() => navigate('/cart')} 
+                onClick={() => navigate('/dash/cart')}
               >
                 Ver Carrito
               </button>

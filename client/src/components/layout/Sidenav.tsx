@@ -19,9 +19,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'Inicio', icon: HomeIcon, path: '/dash/home' },
-  { label: 'Productos', icon: ShoppingBagIcon, path: '/dashboard' },
-  { label: 'Carrito', icon: ShoppingCartIcon, path: '/cart' },
-  { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/orders' },
+  { label: 'Productos', icon: ShoppingBagIcon, path: '/dash/products' },
+  { label: 'Carrito', icon: ShoppingCartIcon, path: '/dash/cart' },
+  { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/dash/home' },
 ];
 
 export default function Sidenav() {
@@ -37,7 +37,7 @@ export default function Sidenav() {
       </button>
 
       {/* Logo */}
-      <div className="sidenav__logo" onClick={() => navigate('/dashboard')} style={{cursor: 'pointer'}}>
+      <div className="sidenav__logo" onClick={() => navigate('/dash/home')} style={{cursor: 'pointer'}}>
         <img src="/logo.svg" alt="TacnaMarket Logo" className="sidenav__logo-img" />
         {!collapsed && <span className="sidenav__logo-text">Tacna Market</span>}
       </div>

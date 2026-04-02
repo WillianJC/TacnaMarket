@@ -60,9 +60,9 @@ export default function AuthForm() {
       const profile = await getProfile(token)
       setStatusMessage(`Bienvenido ${profile.name}, autenticación exitosa.`)
 
-      // PASO 3: Redirigir después de obtener el perfil
+      // PASO 3: Redirigir al home del dashboard
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/dash/home');
       }, 1500); // Esperamos 1.5 segundos para que el usuario vea el mensaje de éxito
 
     } catch (error) {
@@ -92,8 +92,8 @@ export default function AuthForm() {
         const data = await register(payload)
         localStorage.setItem('tacna_access_token', data.access_token)
         setStatusMessage('Registro exitoso. Has iniciado sesión.')
-        // También puedes redirigir aquí si quieres que entre directo al dashboard tras registrarse
-        setTimeout(() => navigate('/dashboard'), 1500);
+        // Redirige al home tras registrarse
+        setTimeout(() => navigate('/dash/home'), 1500);
       }
     } catch (error: any) {
       setStatusMessage(error.message || 'Error de autenticación')

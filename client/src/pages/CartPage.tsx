@@ -15,7 +15,7 @@ export default function CartPage() {
         <header className="cart-page__header">
           <h1 className="cart-page__title">Tu Carrito</h1>
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/dash/products')}
             className="cart-page__back-btn"
           >
             Volver a Comprar
