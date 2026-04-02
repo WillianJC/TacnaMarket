@@ -1,6 +1,5 @@
 services:
   server:
-    image: ghcr.io/willianjc/tacnamarket-server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -11,12 +10,13 @@ services:
     restart: unless-stopped
 
   client:
-    image: ghcr.io/willianjc/tacnamarket-client:latest
     build:
       context: ./client
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:3001}
     ports:
-      - "${CLIENT_PORT:-5173}:80"
+      - "${CLIENT_PORT:-4173}:4173"
     depends_on:
       - server
     restart: unless-stopped
