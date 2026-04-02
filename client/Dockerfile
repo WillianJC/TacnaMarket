@@ -12,15 +12,11 @@ ENV VITE_API_URL=$VITE_API_URL
 
 RUN bun run build
 
-# Stage 2: serve with bun (vite preview)
-FROM oven/bun:1-alpine
-WORKDIR /app
-
-COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile
-
-COPY --from=builder /app/dist ./dist
+# Stage 2: serve con nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 4173
 
-CMD ["bun", "run", "preview"]
+CMD ["nginx", "-g", "daemon off;"]
