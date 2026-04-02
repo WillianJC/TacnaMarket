@@ -45,7 +45,7 @@ export default function CartPage() {
                             src={item.imageUrl}
                             alt={item.name}
                             className="cart-page__item-img"
-                            onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/50'; }}
+                            onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/50?text=Sin+Imagen'; }}
                           />
                           <span className="cart-page__item-name">{item.name}</span>
                         </div>

@@ -13,17 +13,17 @@ const cards = [
   {
     title: 'Ver productos disponibles',
     icon: ShoppingBagIcon,
-    path: '/dashboard',
+    path: '/dash/products',
   },
   {
     title: 'Vea sus pedidos en curso',
     icon: TruckIcon,
-    path: '/orders',
+    path: '/dash/home',
   },
   {
     title: 'Vea su carrito de compras',
     icon: ShoppingCartIcon,
-    path: '/cart',
+    path: '/dash/cart',
   },
 ];
 

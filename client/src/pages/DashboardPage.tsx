@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'; // 1. Importamos el navegador
 import { useCart } from '../context/CartContext'; // 2. Importamos el carrito global
 import Sidenav from '../components/layout/Sidenav';
@@ -26,28 +26,27 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState<boolean>(false);
 
   // Cargar productos desde la API de NestJS
-  const fetchProducts = async (categoryName: string) => {
+  const fetchProducts = useCallback(async (categoryName: string) => {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:3001/api/products/category/${categoryName}`);
       const result = await response.json();
-      setProducts(result.data || []); 
+      setProducts(result.data || []);
     } catch (error) {
       console.error("Error al conectar con la API:", error);
       setProducts([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchProducts(selectedCategory);
-  }, []);
+  }, [selectedCategory, fetchProducts]);
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = useCallback((category: string) => {
     setSelectedCategory(category);
-    fetchProducts(category);
-  };
+  }, []);
 
   return (
     <div className="dashboard">
@@ -96,11 +95,10 @@ export default function DashboardPage() {
                 products.map((product) => (
                   <div key={product.id} className="product-card">
                     <div className="product-card__image-container">
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name} 
+                      <img
+                        src={product.imageUrl}
+                        alt={product.name}
                         className="product-card__image"
-                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150'; }}
                       />
                     </div>
                     
