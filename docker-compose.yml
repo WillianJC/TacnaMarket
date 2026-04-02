@@ -1,6 +1,5 @@
 services:
   server:
-    image: ghcr.io/willianjc/tacnamarket-server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -8,4 +7,16 @@ services:
       - "${NEST_PORT:-3001}:${NEST_PORT:-3001}"
     env_file:
       - .env
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:3001}
+    ports:
+      - "${CLIENT_PORT:-4173}:4173"
+    depends_on:
+      - server
     restart: unless-stopped
