@@ -3,6 +3,7 @@ import AuthPage from '../pages/AuthPage';
 import DashboardPage from '../pages/DashboardPage';
 import CartPage from '../pages/CartPage';
 import ProtectedRoute from './ProtectedRoute';
+import DashHomePage from '../pages/DashHomePage';
 
 export default function AppRouter() {
   return (
@@ -15,13 +16,19 @@ export default function AppRouter() {
         <Route path="/auth" element={<AuthPage />} />
 
         {/* Rutas protegidas */}
-        <Route path="/dashboard" element={
+        <Route path="/dash/products" element={
           <ProtectedRoute>
             <DashboardPage />
           </ProtectedRoute>
         } />
+        {/* Ruta para el home del dashboard */}
+        <Route path="/dash/home" element={
+          <ProtectedRoute>
+            <DashHomePage />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/cart" element={
+        <Route path="/dash/cart" element={
           <ProtectedRoute>
             <CartPage />
           </ProtectedRoute>
