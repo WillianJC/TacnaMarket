@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 1. Importar hooks de navegación
 import {
+  HomeIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
   ClipboardDocumentListIcon,
@@ -8,7 +9,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/outline';
-import viteLogo from '../../assets/vite.svg';
 import './Sidenav.css';
 
 interface NavItem {
@@ -18,6 +18,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { label: 'Inicio', icon: HomeIcon, path: '/dash/home' },
   { label: 'Productos', icon: ShoppingBagIcon, path: '/dashboard' },
   { label: 'Carrito', icon: ShoppingCartIcon, path: '/cart' },
   { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/orders' },
@@ -37,8 +38,8 @@ export default function Sidenav() {
 
       {/* Logo */}
       <div className="sidenav__logo" onClick={() => navigate('/dashboard')} style={{cursor: 'pointer'}}>
-        <img src={viteLogo} alt="Logo" />
-        {!collapsed && <span>TacnaMarket</span>}
+        <img src="/logo.svg" alt="TacnaMarket Logo" className="sidenav__logo-img" />
+        {!collapsed && <span className="sidenav__logo-text">Tacna Market</span>}
       </div>
 
       {/* Nav items con funcionalidad de CLIC */}

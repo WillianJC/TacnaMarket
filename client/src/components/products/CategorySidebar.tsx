@@ -1,3 +1,5 @@
+import './CategorySidebar.css';
+
 interface CategorySidebarProps {
   onCategorySelect: (category: string) => void;
   activeCategory: string;

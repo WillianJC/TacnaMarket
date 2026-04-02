@@ -1,0 +1,157 @@
+.cart-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.cart-page__sidenav {
+  /* El sidenav tiene su propio ancho */
+}
+
+.cart-page__main {
+  flex: 1;
+  padding: 40px;
+  background-color: #f4f7fe;
+  overflow-y: auto;
+}
+
+.cart-page__header {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-page__title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+}
+
+.cart-page__back-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cart-page__back-btn:hover {
+  background: #2563eb;
+}
+
+.cart-page__content {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.cart-page__empty {
+  text-align: center;
+  padding: 40px;
+}
+
+.cart-page__empty-message {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.cart-page__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-page__table thead {
+  border-bottom: 2px solid #eee;
+  text-align: left;
+  color: #888;
+}
+
+.cart-page__table th {
+  padding: 10px;
+  font-weight: 600;
+}
+
+.cart-page__table tbody tr {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.cart-page__table td {
+  padding: 15px;
+}
+
+.cart-page__item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-page__item-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.cart-page__item-name {
+  font-weight: 600;
+}
+
+.cart-page__item-price {
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.cart-page__footer {
+  margin-top: 30px;
+  border-top: 2px solid #eee;
+  padding-top: 20px;
+  text-align: right;
+}
+
+.cart-page__total {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.cart-page__total-amount {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.cart-page__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.cart-page__btn {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cart-page__btn-clear {
+  background: #ef4444;
+  color: white;
+}
+
+.cart-page__btn-clear:hover {
+  background: #dc2626;
+}
+
+.cart-page__btn-checkout {
+  background: #22c55e;
+  color: white;
+}
+
+.cart-page__btn-checkout:hover {
+  background: #16a34a;
+}
