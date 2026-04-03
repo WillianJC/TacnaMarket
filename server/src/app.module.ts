@@ -7,7 +7,8 @@ import { ProductModule } from './product/product.module';
 import { User } from './user/entities/user.entity';
 import { Product, Category } from './product/entities';
 import { DatabaseSeederService } from './database/database-seeder.service';
-
+import { MailModule } from './mail/mail.module';//Importamos el nuevo módulo de correo
+import { OrdersModule } from './orders/orders.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
@@ -46,6 +47,8 @@ import { DatabaseSeederService } from './database/database-seeder.service';
     UserModule,
     AuthModule,
     ProductModule,
+    MailModule,
+    OrdersModule,
   ],
   providers: [DatabaseSeederService],
 })

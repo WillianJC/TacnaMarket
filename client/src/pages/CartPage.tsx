@@ -7,6 +7,42 @@ export default function CartPage() {
   const { cart, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
 
+  // --- Nueva función para conectar con NestJS ---
+  const handleCheckout = async () => {
+    if (cart.length === 0) return;
+
+    // Preparamos el paquete de datos
+    const orderData = {
+      email: "des4rrollad0r@egmail.com", // Aquí puedes poner tu correo para probar
+      cart: cart,
+      total: totalPrice,
+    };
+
+    try {
+      // Usamos el puerto 3001 que tienes en tu .env de NestJS
+      const response = await fetch('http://localhost:3001/orders/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('¡Gracias por tu compra en Tacna Market! Revisa tu correo para la confirmación.');
+        clearCart();
+        navigate('/dash/products');
+      } else {
+        alert('Error al procesar el pedido: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error en la petición:', error);
+      alert('No se pudo conectar con el servidor de Tacna Market.');
+    }
+  };
+
   return (
     <div className="cart-page">
       <Sidenav />
@@ -71,7 +107,7 @@ export default function CartPage() {
                   </button>
                   <button
                     className="cart-page__btn cart-page__btn-checkout"
-                    onClick={() => alert('¡Gracias por tu compra en Tacna Market!')}
+                    onClick={handleCheckout} // <--- Ahora llama a nuestra función async
                   >
                     Finalizar Pedido
                   </button>
