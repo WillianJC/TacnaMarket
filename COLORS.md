@@ -26,6 +26,16 @@
 | `--accent-focus` | #10b981 | Focus state (verde más claro) |
 | `--accent-soft` | #d1fae5 | Fondo suave del acento (verde muy claro) |
 
+## Componente Premium Card
+
+| Nombre Variable | Color Hex | Descripción |
+|---|---|---|
+| `--card-accent` | #059669 | Color principal de la tarjeta premium (verde) |
+| `--card-accent-hover` | #047857 | Hover estado de la tarjeta (verde oscuro) |
+| `--card-accent-soft` | #d1fae5 | Efecto suave en hover (verde muy claro) |
+| Gradiente imagen | #059669 → #10b981 | Gradiente envolvente verde |
+| Brillo glow | rgba(5, 150, 105, 0.3) | Resplandor verde en hover |
+
 ## Colores de Gradientes y Especiales
 
 | Elemento | Color | Descripción |
@@ -41,3 +51,4 @@
 - **Estilo**: Limpio y moderno
 - **Modo**: Light (claro)
 - **Tono**: Profesional y accesible
+- **Componentes Premium**: Cards con efecto glow y shine para destacar promociones
