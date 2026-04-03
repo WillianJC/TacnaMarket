@@ -13,13 +13,13 @@ export default function CartPage() {
 
     // Preparamos el paquete de datos
     const orderData = {
-      email: "des4rrollad0r@egmail.com", // Aquí puedes poner tu correo para probar
+      email: "des4rrollad0r@gmail.com", // Aquí puedes poner tu correo para probar
       cart: cart,
       total: totalPrice,
     };
 
     try {
-      // Usamos el puerto 3001 que tienes en tu .env de NestJS
+      // Usamos el puerto 3001 quee tienes en tu .env de NestJS
       const response = await fetch('http://localhost:3001/orders/checkout', {
         method: 'POST',
         headers: {
