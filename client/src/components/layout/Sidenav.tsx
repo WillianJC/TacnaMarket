@@ -21,7 +21,7 @@ const navItems: NavItem[] = [
   { label: 'Inicio', icon: HomeIcon, path: '/dash/home' },
   { label: 'Productos', icon: ShoppingBagIcon, path: '/dash/products' },
   { label: 'Carrito', icon: ShoppingCartIcon, path: '/dash/cart' },
-  { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/dash/home' },
+  { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/dash/orders' },
 ];
 
 export default function Sidenav() {

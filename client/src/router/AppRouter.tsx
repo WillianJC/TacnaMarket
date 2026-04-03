@@ -4,6 +4,7 @@ import DashboardPage from '../pages/DashboardPage';
 import CartPage from '../pages/CartPage';
 import ProtectedRoute from './ProtectedRoute';
 import DashHomePage from '../pages/DashHomePage';
+import OrdersPage from '../pages/OrdersPage';
 
 export default function AppRouter() {
   return (
@@ -31,6 +32,12 @@ export default function AppRouter() {
         <Route path="/dash/cart" element={
           <ProtectedRoute>
             <CartPage />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/dash/orders" element={
+          <ProtectedRoute>
+            <OrdersPage />
           </ProtectedRoute>
         } />
 

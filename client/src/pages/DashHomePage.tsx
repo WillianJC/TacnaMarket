@@ -18,7 +18,7 @@ const cards = [
   {
     title: 'Vea sus pedidos en curso',
     icon: TruckIcon,
-    path: '/dash/home',
+    path: '/dash/orders',
   },
   {
     title: 'Vea su carrito de compras',

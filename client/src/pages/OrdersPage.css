@@ -1,0 +1,155 @@
+.orders-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.orders-page__main {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.pedidos-section {
+  padding: 2rem;
+  font-family: sans-serif;
+  color: #333;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.pedidos-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.pedidos-header h2 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  color: #1a202c;
+}
+
+.pedidos-header p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.tracking-container {
+  display: flex;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  gap: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.tracking-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-badge {
+  display: inline-block;
+  background-color: #e2e8f0;
+  color: #475569;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.estimated-time {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.order-status {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 10px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  bottom: 20px;
+  width: 2px;
+  background-color: #cbd5e1;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+  color: #94a3b8;
+}
+
+.timeline-step p {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.95rem;
+}
+
+.timeline-step .dot {
+  width: 10px;
+  height: 10px;
+  background-color: #cbd5e1;
+  border-radius: 50%;
+  margin-top: 5px;
+  z-index: 1;
+}
+
+.timeline-step.completed {
+  color: #333;
+}
+
+.timeline-step.completed .dot {
+  background-color: #10b981;
+}
+
+.timeline-step.active {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.timeline-step.active .dot {
+  background-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.map-placeholder {
+  flex: 1.5;
+  background-color: #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #64748b;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px dashed #cbd5e1;
+}
+
+.step-time {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-left: 0.35rem;
+}
