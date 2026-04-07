@@ -118,7 +118,7 @@ export default function AuthForm() {
               id="username"
               label="Usuario"
               type="text"
-              placeholder="Correo o nombre de usuario"
+              placeholder="usuario"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               Icon={UserIcon}
