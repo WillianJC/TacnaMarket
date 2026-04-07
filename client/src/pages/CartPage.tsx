@@ -2,17 +2,21 @@ import { useState } from 'react'; // 1. Importamos useState
 import { useCart } from '../context/CartContext';
 import Sidenav from '../components/layout/Sidenav';
 import { useNavigate } from 'react-router-dom';
+import PaymentCarousel from '../components/PaymentCarousel';
 import './CartPage.css';
 
 export default function CartPage() {
   const { cart, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
+  const [showPaymentCarousel, setShowPaymentCarousel] = useState(false);
 
   // 2. Creamos el estado para el correo del cliente
   const [customerEmail, setCustomerEmail] = useState('');
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
+
+    setShowPaymentCarousel(true);
 
     // 3. Validación básica: que el correo no esté vacío
     if (!customerEmail) {
@@ -41,18 +45,22 @@ export default function CartPage() {
       if (result.success) {
         alert(`¡Gracias por tu compra! El recibo ha sido enviado a: ${customerEmail}`);
         clearCart();
+        setShowPaymentCarousel(false);
         navigate('/dash/products');
       } else {
         alert('Error al procesar el pedido: ' + result.message);
+        setShowPaymentCarousel(false);
       }
     } catch (error) {
       console.error('Error en la petición:', error);
       alert('No se pudo conectar con el servidor de Tacna Market.');
+      setShowPaymentCarousel(false);
     }
   };
 
   return (
     <div className="cart-page">
+      {showPaymentCarousel && <PaymentCarousel />}
       <Sidenav />
 
       <main className="cart-page__main">
@@ -117,7 +125,6 @@ export default function CartPage() {
                   required
                 />
               </div>
-
               <div className="cart-page__footer">
                 <h2 className="cart-page__total">
                   Total a pagar: <span className="cart-page__total-amount">S/ {totalPrice.toFixed(2)}</span>
