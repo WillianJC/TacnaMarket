@@ -48,9 +48,7 @@ export class AuthService {
 
     const hashed = await bcrypt.hash(dto.password, 10);
     const user = this.userRepository.create({ ...dto, password: hashed });
-    const saved = (await this.userRepository.save(user)) as User & {
-      password: string;
-    };
+    const saved = await this.userRepository.save(user);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...result } = saved;
