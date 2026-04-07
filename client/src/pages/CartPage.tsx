@@ -16,7 +16,7 @@ export default function CartPage() {
   const handleCheckout = async () => {
     if (cart.length === 0) return;
 
-    setShowPaymentCarousel(true);
+
 
     // 3. Validación básica: que el correo no esté vacío
     if (!customerEmail) {
@@ -45,22 +45,19 @@ export default function CartPage() {
       if (result.success) {
         alert(`¡Gracias por tu compra! El recibo ha sido enviado a: ${customerEmail}`);
         clearCart();
-        setShowPaymentCarousel(false);
         navigate('/dash/products');
       } else {
         alert('Error al procesar el pedido: ' + result.message);
-        setShowPaymentCarousel(false);
       }
     } catch (error) {
       console.error('Error en la petición:', error);
       alert('No se pudo conectar con el servidor de Tacna Market.');
-      setShowPaymentCarousel(false);
     }
   };
 
   return (
     <div className="cart-page">
-      {showPaymentCarousel && <PaymentCarousel />}
+      {showPaymentCarousel && <PaymentCarousel onClose={() => setShowPaymentCarousel(false)} />}
       <Sidenav />
 
       <main className="cart-page__main">
@@ -109,6 +106,17 @@ export default function CartPage() {
                   ))}
                 </tbody>
               </table>
+              
+
+              <div>
+                <h2 className="cart-page__payment-title">Paganos!!</h2>
+                <button
+                  className="cart-page__payment-btn"
+                  onClick={() => setShowPaymentCarousel(true)}
+                >
+                  Ver Métodos de Pago
+                </button>
+              </div>
 
               {/* --- 4. NUEVA SECCIÓN PARA EL CORREO --- */}
               <div className="cart-page__email-section">
