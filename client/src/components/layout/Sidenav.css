@@ -70,8 +70,6 @@
 }
 
 .sidenav__logo-img {
-  width: auto;
-  height: auto;
   flex-shrink: 0;
   transition: width var(--sn-transition), height var(--sn-transition);
 }

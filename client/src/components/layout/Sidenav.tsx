@@ -38,8 +38,7 @@ export default function Sidenav() {
 
       {/* Logo */}
       <div className="sidenav__logo" onClick={() => navigate('/dash/home')} style={{cursor: 'pointer'}}>
-        <img src="/logo.svg" alt="TacnaMarket Logo" className="sidenav__logo-img" />
-        {!collapsed && <span className="sidenav__logo-text">Tacna Market</span>}
+      <img src="/favicon.ico" width={130} height={130} className="sidenav__logo-img" alt="TacnaMarket Logo" />
       </div>
 
       {/* Nav items con funcionalidad de CLIC */}
