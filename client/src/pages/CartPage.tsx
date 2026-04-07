@@ -1,7 +1,7 @@
 import { useCart } from '../context/CartContext';
 import Sidenav from '../components/layout/Sidenav';
 import { useNavigate } from 'react-router-dom';
-import './CartPage.css';
+import './CartPage.css'; //este es el css de la impor
 
 export default function CartPage() {
   const { cart, totalPrice, clearCart } = useCart();
@@ -20,7 +20,7 @@ export default function CartPage() {
 
     try {
       // Usamos el puerto 3001 quee tienes en tu .env de NestJS
-      const response = await fetch('http://localhost:3001/orders/checkout', {
+      const response = await fetch('https://api.tacna-market.shop/orders/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

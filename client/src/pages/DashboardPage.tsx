@@ -29,7 +29,7 @@ export default function DashboardPage() {
   const fetchProducts = useCallback(async (categoryName: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3001/api/products/category/${categoryName}`);
+      const response = await fetch(`https://api.tacna-market.shop/api/products/category/${categoryName}`);
       const result = await response.json();
       setProducts(result.data || []);
     } catch (error) {
