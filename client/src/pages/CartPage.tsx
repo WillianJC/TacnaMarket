@@ -1,25 +1,33 @@
+import { useState } from 'react'; // 1. Importamos useState
 import { useCart } from '../context/CartContext';
 import Sidenav from '../components/layout/Sidenav';
 import { useNavigate } from 'react-router-dom';
-import './CartPage.css'; //este es el css de la impor
+import './CartPage.css';
 
 export default function CartPage() {
   const { cart, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
 
-  // --- Nueva función para conectar con NestJS ---
+  // 2. Creamos el estado para el correo del cliente
+  const [customerEmail, setCustomerEmail] = useState('');
+
   const handleCheckout = async () => {
     if (cart.length === 0) return;
 
-    // Preparamos el paquete de datos
+    // 3. Validación básica: que el correo no esté vacío
+    if (!customerEmail) {
+      alert('Por favor, ingresa un correo electrónico para enviarte el recibo.');
+      return;
+    }
+
     const orderData = {
-      email: "des4rrollad0r@gmail.com", // Aquí puedes poner tu correo para probar
+      email: customerEmail, // <--- Ahora usamos el correo que escribió el cliente
       cart: cart,
       total: totalPrice,
     };
 
     try {
-      // Usamos el puerto 3001 quee tienes en tu .env de NestJS
+      // Nota: En producción cambia localhost por https://api.tacna-market.shop
       const response = await fetch('https://api.tacna-market.shop/orders/checkout', {
         method: 'POST',
         headers: {
@@ -31,7 +39,7 @@ export default function CartPage() {
       const result = await response.json();
 
       if (result.success) {
-        alert('¡Gracias por tu compra en Tacna Market! Revisa tu correo para la confirmación.');
+        alert(`¡Gracias por tu compra! El recibo ha sido enviado a: ${customerEmail}`);
         clearCart();
         navigate('/dash/products');
       } else {
@@ -61,7 +69,7 @@ export default function CartPage() {
         <section className="cart-page__content">
           {cart.length === 0 ? (
             <div className="cart-page__empty">
-              <p className="cart-page__empty-message">Tu carrito está vacío. ¡Llénalo de productos frescos!</p>
+              <p className="cart-page__empty-message">Tu carrito está vacío.</p>
             </div>
           ) : (
             <>
@@ -94,6 +102,22 @@ export default function CartPage() {
                 </tbody>
               </table>
 
+              {/* --- 4. NUEVA SECCIÓN PARA EL CORREO --- */}
+              <div className="cart-page__email-section">
+                <label htmlFor="email" className="cart-page__email-label">
+                  Enviar recibo a:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="ejemplo@correo.com"
+                  className="cart-page__email-input"
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  required
+                />
+              </div>
+
               <div className="cart-page__footer">
                 <h2 className="cart-page__total">
                   Total a pagar: <span className="cart-page__total-amount">S/ {totalPrice.toFixed(2)}</span>
@@ -107,7 +131,7 @@ export default function CartPage() {
                   </button>
                   <button
                     className="cart-page__btn cart-page__btn-checkout"
-                    onClick={handleCheckout} // <--- Ahora llama a nuestra función async
+                    onClick={handleCheckout}
                   >
                     Finalizar Pedido
                   </button>
