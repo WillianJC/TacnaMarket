@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .payment-carousel__container {
@@ -19,6 +20,43 @@
   width: 90%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   text-align: center;
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-carousel__close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.payment-carousel__close-btn:hover {
+  background: #e5e7eb;
+  color: #333;
+  transform: scale(1.1);
 }
 
 .payment-carousel__title {
@@ -31,18 +69,19 @@
 .payment-carousel__image-wrapper {
   width: 100%;
   aspect-ratio: 1;
-  background: #f3f4f6;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   border-radius: 15px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  border: 2px solid #d1d5db;
 }
 
 .payment-carousel__image {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   object-fit: contain;
   animation: fadeInOut 0.5s ease-in-out;
 }
@@ -63,6 +102,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .payment-carousel__indicator {
@@ -71,7 +111,7 @@
   border-radius: 50%;
   background-color: #d1d5db;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .payment-carousel__indicator.active {
@@ -80,3 +120,15 @@
   height: 8px;
   border-radius: 4px;
 }
+
+.payment-carousel__description {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  padding: 15px;
+  background: #f0f9ff;
+  border-radius: 10px;
+  border-left: 4px solid #3b82f6;
+  text-align: left;
+}
+
