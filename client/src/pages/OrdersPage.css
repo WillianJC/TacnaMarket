@@ -1,0 +1,197 @@
+.orders-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafb;
+}
+
+.orders-main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.orders-header h1 {
+  font-size: 2.5rem;
+  font-family: 'Indie Flower', cursive; 
+}
+
+.orders-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  margin-top: 30px;
+  background: #eef2f3;
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-info-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #999;
+  text-align: center;
+  z-index: 5; /* Asegura visibilidad */
+}
+
+.repartidor-tag {
+  font-weight: bold;
+  color: #666;
+  border-bottom: 1px solid #eee;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilo de los pasos */
+.step-item {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.step-item.active {
+  color: #059669;
+  font-weight: bold;
+}
+
+.step-dot {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 15px;
+  height: 15px;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+.step-item.active .step-dot {
+  background: #059669;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.5);
+}
+
+.step-line {
+  position: absolute;
+  left: 7px;
+  top: 25px;
+  width: 2px;
+  height: 30px;
+  background: #ccc;
+}
+
+/* Contenedor del Mapa - Ajustado para Iframe */
+.map-container {
+  position: relative;
+  min-height: 450px;
+  border-radius: 10px;
+  border: 2px solid #999;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Estilo para que el iframe ocupe todo el fondo */
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.map-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  z-index: 20; /* Por encima de todo */
+  font-weight: bold;
+  border: 1px solid #ccc;
+}
+
+/* Animación de la Motito sobre el Mapa */
+.moto-delivery {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+  width: 85px; /* Un poco más grande para que se note el detalle */
+  z-index: 15; 
+  pointer-events: none; 
+  transition: all 0.5s ease;
+}
+
+.moto-delivery img {
+  width: 100%;
+  /* Quitamos el background white y padding para que sea transparente */
+  background: transparent; 
+  /* Sombra tipo "drop-shadow" para que se despegue del mapa satelital */
+  filter: drop-shadow(4px 6px 8px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease; /* Para que el giro de la moto sea suave y no brusco */
+}
+
+.moto-delivery.moving {
+  animation: rutaMoto 25s linear forwards;
+}
+
+.moto-delivery.stopped {
+  left: 75%; 
+  top: 45%;
+  /* Brillo verde cuando llega a destino */
+  filter: drop-shadow(0 0 15px #10b981) drop-shadow(4px 6px 8px rgba(0,0,0,0.5));
+}
+
+@keyframes rutaMoto {
+  0% { 
+    left: 10%; top: 40%; transform: rotate(0deg); 
+  }
+  /* 1. Avanza por la primera calle */
+  25% { 
+    left: 30%; top: 40%; transform: rotate(0deg); 
+  }
+  /* 2. Dobla en una esquina (hacia abajo) */
+  35% { 
+    left: 30%; top: 60%; transform: rotate(90deg); 
+  }
+  /* 3. Sigue por la otra avenida */
+  60% { 
+    left: 60%; top: 60%; transform: rotate(0deg); 
+  }
+  /* 4. Sube un poco para llegar al destino final */
+  85% { 
+    left: 60%; top: 45%; transform: rotate(-90deg); 
+  }
+  /* 5. Destino Final */
+  100% { 
+    left: 75%; top: 45%; transform: rotate(0deg); 
+  }
+}
+
+.buen-provecho {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #059669;
+  margin-top: 20px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #059669;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

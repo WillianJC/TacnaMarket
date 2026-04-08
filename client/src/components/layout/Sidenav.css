@@ -154,18 +154,27 @@
 }
 
 /* Footer / Signout */
+/* Footer / Signout */
 .sidenav__footer {
-  padding: 8px 8px 16px;
+  padding: 8px;
   border-top: 1px solid var(--sn-border);
+  margin-top: auto;
 }
 
 .sidenav__item--signout {
   color: var(--sn-text);
-  border-color: var(--sn-border);
+  border: 1px solid var(--sn-border);
+  transition: all 0.3s ease;
 }
 
+/* Efecto Rojo Suave en Hover */
 .sidenav__item--signout:hover {
-  background: #fee2e2;
-  color: #dc2626;
-  border-color: #fca5a5;
+  background-color: #fef2f2 !important; /* Rojo clarito */
+  color: #ef4444 !important;           /* Rojo fuerte para texto */
+  border-color: #fecaca !important;    /* Borde rosado */
+}
+
+.sidenav__item--signout:hover .sidenav__item-icon {
+  color: #ef4444 !important;
+  transform: scale(1.1);
 }

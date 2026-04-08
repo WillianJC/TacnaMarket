@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // 1. Importar hooks de navegación
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   HomeIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
-  ClipboardDocumentListIcon,
+  TruckIcon, // Cambiado para que coincida con la moto de la simulación
   ArrowLeftStartOnRectangleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -14,20 +14,20 @@ import './Sidenav.css';
 interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  path: string; // 2. Agregamos el path (la ruta) a la interfaz
+  path: string;
 }
 
 const navItems: NavItem[] = [
   { label: 'Inicio', icon: HomeIcon, path: '/dash/home' },
   { label: 'Productos', icon: ShoppingBagIcon, path: '/dash/products' },
   { label: 'Carrito', icon: ShoppingCartIcon, path: '/dash/cart' },
-  { label: 'Pedidos', icon: ClipboardDocumentListIcon, path: '/dash/home' },
+  { label: 'Pedidos', icon: TruckIcon, path: '/dash/orders' }, // CORREGIDO: ahora apunta a /dash/orders
 ];
 
 export default function Sidenav() {
   const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate(); // 3. Inicializar el navegador
-  const location = useLocation(); // Para saber en qué página estamos (opcional)
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <aside className={`sidenav${collapsed ? ' sidenav--collapsed' : ''}`}>
@@ -38,16 +38,16 @@ export default function Sidenav() {
 
       {/* Logo */}
       <div className="sidenav__logo" onClick={() => navigate('/dash/home')} style={{cursor: 'pointer'}}>
-      <img src="/favicon.ico" width={130} height={130} className="sidenav__logo-img" alt="TacnaMarket Logo" />
+        <img src="/favicon.ico" width={130} height={130} className="sidenav__logo-img" alt="TacnaMarket Logo" />
       </div>
 
-      {/* Nav items con funcionalidad de CLIC */}
+      {/* Nav items */}
       <nav className="sidenav__nav">
         {navItems.map(({ label, icon: Icon, path }) => (
           <div 
             key={label} 
-            className={`sidenav__item ${location.pathname === path ? 'active' : ''}`}
-            onClick={() => navigate(path)} // 4. AQUÍ SE HACE LA REDIRECCIÓN
+            className={`sidenav__item ${location.pathname === path ? 'active' : ''}`} // Ahora la comparación será exacta
+            onClick={() => navigate(path)}
             style={{ cursor: 'pointer' }}
           >
             <Icon className="sidenav__item-icon" />
@@ -61,9 +61,9 @@ export default function Sidenav() {
         <div 
           className="sidenav__item sidenav__item--signout" 
           onClick={() => {
-            localStorage.removeItem('tacna_access_token'); // misma clave que AuthForm
+            localStorage.removeItem('tacna_access_token');
             navigate('/auth');
-        }}
+          }}
         >
           <ArrowLeftStartOnRectangleIcon className="sidenav__item-icon" />
           {!collapsed && <span className="sidenav__item-label">Cerrar sesión</span>}

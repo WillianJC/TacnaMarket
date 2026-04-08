@@ -1,28 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  ShoppingBagIcon,
-  TruckIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/24/outline';
 import Sidenav from '../components/layout/Sidenav';
 import { getProfile } from '../services/authService';
 import './DashHomePage.css';
 
+// Definimos las tarjetas con las rutas de tus nuevas imágenes
 const cards = [
   {
     title: 'Ver productos disponibles',
-    icon: ShoppingBagIcon,
+    img: '/productos.png',
     path: '/dash/products',
   },
   {
-    title: 'Vea sus pedidos en curso',
-    icon: TruckIcon,
-    path: '/dash/home',
+  title: 'Vea sus pedidos en curso',
+  img: '/pedidos.png',
+  path: '/dash/orders', // Cambiado de /dash/home a /dash/orders
   },
   {
     title: 'Vea su carrito de compras',
-    icon: ShoppingCartIcon,
+    img: '/carrito.png',
     path: '/dash/cart',
   },
 ];
@@ -55,16 +51,20 @@ export default function DashHomePage() {
         </header>
 
         <div className="dash-home__cards">
-          {cards.map(({ title, icon: Icon, path }) => (
+          {cards.map(({ title, img, path }) => (
             <div
               key={title}
               className="dash-home__card"
               onClick={() => navigate(path)}
+              style={{ cursor: 'pointer' }} // Para que sepa que es clickable
             >
               <h3 className="dash-home__card-title">{title}</h3>
               <div className="dash-home__card-img">
-                <Icon className="dash-home__card-icon" />
-                <span>IMG</span>
+                <img 
+                  src={img} 
+                  alt={title} 
+                  className="dash-home__card-image-file"
+                  />
               </div>
             </div>
           ))}

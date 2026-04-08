@@ -58,7 +58,7 @@
   background-color: var(--dh-card-bg);
   border: 1px solid var(--dh-border);
   border-radius: 12px;
-  padding: 24px;
+  padding: 24px 16px; /* Bajamos un poco el padding lateral */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,33 +81,43 @@
   text-align: center;
 }
 
-/* Image placeholder */
+/* Image Container */
 .dash-home__card-img {
   width: 100%;
-  height: 160px;
-  background-color: var(--dh-bg);
+  /* Bajamos el aspect ratio para que el cuadro sea más "chato" y obligue al dibujo a verse más grande */
+  aspect-ratio: 2.5 / 1; 
+  height: auto;
+  background-color: #ffffff;
   border: 2px dashed var(--dh-border);
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  display: flex; /* Cambiamos a flex para centrar bien */
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  color: var(--dh-placeholder);
-  font-weight: 500;
-  font-size: 0.9rem;
+  padding: 0 !important;
+  position: relative;
   transition: all 0.2s ease;
 }
 
-.dash-home__card:hover .dash-home__card-img {
-  background-color: var(--dh-accent-soft);
-  border-color: var(--dh-accent);
-  color: var(--dh-accent);
+/* Ajuste de la imagen */
+.dash-home__card-image-file {
+  /* Aquí está el truco: le damos más del 100% para ignorar los bordes blancos de la foto */
+  width: 130% !important; 
+  height: 130% !important;
+  /* 'contain' suele funcionar mejor con estas ilustraciones para que no se corten */
+  object-fit: contain; 
+  display: block;
+  margin: 0;
+  transition: transform 0.3s ease;
 }
 
-.dash-home__card-icon {
-  width: 40px;
-  height: 40px;
+/* Para que el zoom del hover no rompa el invento */
+.dash-home__card:hover .dash-home__card-image-file {
+  transform: scale(1.1); 
+}
+
+.dash-home__card:hover .dash-home__card-image-file {
+  transform: scale(1.05); /* Efecto de zoom suave al pasar el mouse */
 }
 
 @media (max-width: 768px) {
