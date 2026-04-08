@@ -107,3 +107,28 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+/* Estilo para el mensaje de bienvenida en el Login */
+/* Clase base (sin colores de fondo fijos) */
+.status-message {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 600;
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Cuando es ÉXITO (Verde) */
+.status-message.success {
+  border: 1px solid #10b981;
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+/* Cuando es ERROR (Rojo) */
+.status-message.error {
+  border: 1px solid #ef4444; /* Rojo */
+  background-color: #fef2f2; /* Fondo rosado/rojo suave */
+  color: #991b1b; /* Texto rojo oscuro */
+}

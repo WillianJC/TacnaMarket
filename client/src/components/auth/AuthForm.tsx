@@ -51,6 +51,9 @@ export default function AuthForm() {
   const [agreeTerms, setAgreeTerms] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false);
+  
+  // PASO 1: Nuevo estado para controlar si el mensaje es de error o éxito
+  const [isError, setIsError] = useState(false);
 
   const handleResponse = async () => {
     const token = localStorage.getItem('tacna_access_token')
@@ -58,15 +61,18 @@ export default function AuthForm() {
 
     try {
       const profile = await getProfile(token)
-      setStatusMessage(`Bienvenido ${profile.name}, autenticación exitosa.`)
+      const displayName = profile.name || profile.username || profile.email || 'Usuario';
+      
+      setIsError(false); // Es un éxito
+      setStatusMessage(`Bienvenido ${displayName}, autenticación exitosa.`)
 
-      // PASO 3: Redirigir al home del dashboard
       setTimeout(() => {
         navigate('/dash/home');
-      }, 1500); // Esperamos 1.5 segundos para que el usuario vea el mensaje de éxito
+      }, 1500); 
 
     } catch (error) {
       console.error(error)
+      setIsError(true); // Es un error
       setStatusMessage('No se pudo obtener el perfil después del login.')
     }
   }
@@ -75,6 +81,7 @@ export default function AuthForm() {
     event.preventDefault()
 
     if (!agreeTerms) {
+      setIsError(true); // <--- Cambio aquí
       setStatusMessage('Debes aceptar los términos y condiciones.')
       return
     }
@@ -85,22 +92,27 @@ export default function AuthForm() {
       if (isLogin) {
         const data = await login({ username, password })
         localStorage.setItem('tacna_access_token', data.access_token)
+        
+        setIsError(false); // <--- Éxito
         setStatusMessage('Login exitoso')
-        await handleResponse() // Esto llamará a handleResponse y luego a navigate
+        await handleResponse() 
       } else {
         const payload = { name, username, password, address }
         const data = await register(payload)
         localStorage.setItem('tacna_access_token', data.access_token)
+        
+        setIsError(false); // <--- Éxito
         setStatusMessage('Registro exitoso. Has iniciado sesión.')
-        // Redirige al home tras registrarse
         setTimeout(() => navigate('/dash/home'), 1500);
       }
     } catch (error: any) {
+      setIsError(true); // <--- Error de red o credenciales
       setStatusMessage(error.message || 'Error de autenticación')
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <section className="auth-form-card">
       <div className="brand-header">
@@ -193,7 +205,12 @@ export default function AuthForm() {
           {isLoading ? 'Procesando...' : isLogin ? 'LOGIN' : 'REGISTRARSE'}
         </button>
 
-        {statusMessage && <p className="status-message">{statusMessage}</p>}
+        {/* PASO 2: Aquí aplicamos la clase dinámica success o error */}
+        {statusMessage && (
+          <p className={`status-message ${isError ? 'error' : 'success'}`}>
+            {statusMessage}
+          </p>
+        )}
 
         <div className="switch-line">
           <span>{isLogin ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'}</span>
@@ -203,6 +220,7 @@ export default function AuthForm() {
             onClick={() => {
               setIsLogin(!isLogin)
               setStatusMessage('')
+              setIsError(false) // Limpiamos el error al cambiar de modo
             }}
           >
             {isLogin ? 'REGISTRARSE' : 'LOGIN'}
@@ -212,4 +230,3 @@ export default function AuthForm() {
     </section>
   )
 }
-
