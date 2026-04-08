@@ -28,7 +28,7 @@ export class ProductController {
   async getProductsByCategory(
     @Param('categoryName') categoryName: string,
     @Query('page') page: string = '1',
-    @Query('limit') limit: string = '10',
+    @Query('limit') limit: string = '100',
   ) {
     const pageNum = Math.max(1, parseInt(page, 10) || 1);
     const limitNum = Math.max(1, Math.min(100, parseInt(limit, 10) || 10));

@@ -32,7 +32,8 @@ export class ProductService {
     return this.categoryRepository.save(category);
   }
 
-  async getProductsByCategory(categoryName: string, page: number = 1, limit: number = 10) {
+  // LÍMITE CAMBIADO DE 10 A 100 EN ESTA LÍNEA 👇
+  async getProductsByCategory(categoryName: string, page: number = 1, limit: number = 100) {
     const skip = (page - 1) * limit;
 
     const [products, total] = await this.productRepository.findAndCount({
