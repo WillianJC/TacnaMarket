@@ -1,57 +1,57 @@
-import { useState } from 'react'; // 1. Importamos useState
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import Sidenav from '../components/layout/Sidenav';
-import { useNavigate } from 'react-router-dom';
 import PaymentCarousel from '../components/PaymentCarousel';
 import './CartPage.css';
 
-export default function CartPage() {
-  const { cart, totalPrice, clearCart } = useCart();
-  const navigate = useNavigate();
-  const [showPaymentCarousel, setShowPaymentCarousel] = useState(false);
+// Configuración de API automática: Detecta si estás en tu PC o en AWS
+const API_BASE_URL = 'https://api.tacna-market.shop';
 
-  // 2. Creamos el estado para el correo del cliente
+export default function CartPage() {
+  const navigate = useNavigate();
+  const { cart, totalPrice, clearCart } = useCart();
+  
+  // Estados
   const [customerEmail, setCustomerEmail] = useState('');
+  const [showPaymentCarousel, setShowPaymentCarousel] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleCheckout = async () => {
-    if (cart.length === 0) return;
+    if (cart.length === 0 || isProcessing) return;
 
-
-
-    // 3. Validación básica: que el correo no esté vacío
     if (!customerEmail) {
-      alert('Por favor, ingresa un correo electrónico para enviarte el recibo.');
+      alert('Por favor, ingresa un correo para enviarte el recibo.');
       return;
     }
 
-    const orderData = {
-      email: customerEmail, // <--- Ahora usamos el correo que escribió el cliente
-      cart: cart,
-      total: totalPrice,
-    };
+    setIsProcessing(true);
 
     try {
-      // Nota: En producción cambia localhost por https://api.tacna-market.shop
-      const response = await fetch('https://api.tacna-market.shop/orders/checkout', {
+      const response = await fetch(`${API_BASE_URL}/orders/checkout`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: customerEmail,
+          cart: cart,
+          total: totalPrice,
+        }),
       });
 
       const result = await response.json();
 
       if (result.success) {
-        alert(`¡Gracias por tu compra! El recibo ha sido enviado a: ${customerEmail}`);
+        alert(`¡Compra exitosa! Recibo enviado a: ${customerEmail}`);
         clearCart();
         navigate('/dash/products');
       } else {
-        alert('Error al procesar el pedido: ' + result.message);
+        throw new Error(result.message || 'Error al procesar');
       }
     } catch (error) {
-      console.error('Error en la petición:', error);
-      alert('No se pudo conectar con el servidor de Tacna Market.');
+      console.error('Checkout error:', error);
+      alert('Error de conexión. Verifica que el servidor esté activo.');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -63,10 +63,7 @@ export default function CartPage() {
       <main className="cart-page__main">
         <header className="cart-page__header">
           <h1 className="cart-page__title">Tu Carrito</h1>
-          <button
-            onClick={() => navigate('/dash/products')}
-            className="cart-page__back-btn"
-          >
+          <button onClick={() => navigate('/dash/products')} className="cart-page__back-btn">
             Volver a Comprar
           </button>
         </header>
@@ -78,6 +75,7 @@ export default function CartPage() {
             </div>
           ) : (
             <>
+              {/* Tabla de Productos */}
               <table className="cart-page__table">
                 <thead>
                   <tr>
@@ -90,9 +88,9 @@ export default function CartPage() {
                     <tr key={index}>
                       <td>
                         <div className="cart-page__item">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.name}
+                          <img 
+                            src={item.imageUrl} 
+                            alt={item.name} 
                             className="cart-page__item-img"
                             onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/50?text=Sin+Imagen'; }}
                           />
@@ -106,49 +104,70 @@ export default function CartPage() {
                   ))}
                 </tbody>
               </table>
-              
 
-              <div>
-                <h2 className="cart-page__payment-title">Paganos!!</h2>
+              {/* MÉTODOS DE PAGO */}
+              <div className="cart-page__payment-section" style={{ marginTop: '30px' }}>
+                <h2 className="cart-page__payment-title">Métodos de Pago</h2>
                 <button
                   className="cart-page__payment-btn"
                   onClick={() => setShowPaymentCarousel(true)}
+                  style={{ background: '#8c2a8d', color: 'white', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', border: 'none' }}
                 >
-                  Ver Métodos de Pago
+                  Ver QR de Yape/Plin
                 </button>
               </div>
 
-              {/* --- 4. NUEVA SECCIÓN PARA EL CORREO --- */}
-              <div className="cart-page__email-section">
-                <label htmlFor="email" className="cart-page__email-label">
-                  Enviar recibo a:
+              {/* --- SECCIÓN DE CORREO CON ESTILO Y ESPACIADO --- */}
+              <div 
+                className="cart-page__email-section" 
+                style={{ 
+                  marginTop: '25px', 
+                  padding: '20px', 
+                  background: '#f4f7f6', 
+                  borderRadius: '10px',
+                  border: '1px solid #e0e0e0' 
+                }}
+              >
+                <label 
+                  htmlFor="email" 
+                  style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold', color: '#2c3e50' }}
+                >
+                   ¿A dónde enviamos tu recibo?
                 </label>
                 <input
                   type="email"
                   id="email"
                   placeholder="ejemplo@correo.com"
-                  className="cart-page__email-input"
+                  style={{ 
+                    width: '100%', 
+                    padding: '12px', 
+                    borderRadius: '6px', 
+                    border: '1px solid #ccc',
+                    fontSize: '16px',
+                    boxSizing: 'border-box' // Evita que se salga del contenedor
+                  }}
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
                   required
                 />
               </div>
-              <div className="cart-page__footer">
+
+              {/* FOOTER TOTALES */}
+              <div className="cart-page__footer" style={{ marginTop: '30px' }}>
                 <h2 className="cart-page__total">
                   Total a pagar: <span className="cart-page__total-amount">S/ {totalPrice.toFixed(2)}</span>
                 </h2>
                 <div className="cart-page__actions">
-                  <button
-                    onClick={clearCart}
-                    className="cart-page__btn cart-page__btn-clear"
-                  >
+                  <button onClick={clearCart} className="cart-page__btn cart-page__btn-clear" disabled={isProcessing}>
                     Vaciar Carrito
                   </button>
-                  <button
+                  <button 
+                    onClick={handleCheckout} 
                     className="cart-page__btn cart-page__btn-checkout"
-                    onClick={handleCheckout}
+                    style={{ background: isProcessing ? '#ccc' : '#27ae60' }}
+                    disabled={isProcessing}
                   >
-                    Finalizar Pedido
+                    {isProcessing ? 'Enviando...' : 'Finalizar Pedido'}
                   </button>
                 </div>
               </div>
