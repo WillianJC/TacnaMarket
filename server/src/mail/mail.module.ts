@@ -1,31 +1,21 @@
 import { Module } from '@nestjs/common';
-import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Resend } from 'resend';
 
 @Module({
-  imports: [
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
+  imports: [ConfigModule],
+  providers: [
+    {
+      provide: 'RESEND_CLIENT',
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        transport: {
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-            // Aquí leemos las variables que acabas de poner en el .env
-            user: config.get<string>('EMAIL_USER'),
-            pass: config.get<string>('EMAIL_PASS'),
-          },
-        },
-        defaults: {
-          from: `"Tacna Market" <${config.get<string>('EMAIL_USER')}>`,
-        },
-      }),
-    }),
+      useFactory: (config: ConfigService) => {
+        const apiKey = config.get<string>('RESEND_API_KEY');
+        return new Resend(apiKey);
+      },
+    },
+    MailService,
   ],
-  providers: [MailService],
   exports: [MailService],
 })
 export class MailModule {}

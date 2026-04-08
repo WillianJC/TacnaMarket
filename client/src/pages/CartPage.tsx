@@ -6,7 +6,7 @@ import PaymentCarousel from '../components/PaymentCarousel';
 import './CartPage.css';
 
 // Configuración de API automática: Detecta si estás en tu PC o en AWS
-const API_BASE_URL = 'https://api.tacna-market.shop';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function CartPage() {
     setIsProcessing(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/orders/checkout`, {
+      const response = await fetch(`${BASE_URL}/orders/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

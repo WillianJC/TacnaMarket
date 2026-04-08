@@ -14,6 +14,7 @@ interface Product {
   stock: number;
   imageUrl: string;
 }
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export default function DashboardPage() {
   const navigate = useNavigate(); // Inicializamos el navegador
@@ -29,7 +30,7 @@ export default function DashboardPage() {
   const fetchProducts = useCallback(async (categoryName: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://api.tacna-market.shop/api/products/category/${categoryName}`);
+      const response = await fetch(`${BASE_URL}/api/products/category/${categoryName}`);
       const result = await response.json();
       setProducts(result.data || []);
     } catch (error) {

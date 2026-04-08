@@ -1,11 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
+import { Injectable, Logger, Inject } from '@nestjs/common';
+import { Resend } from 'resend';
 
 @Injectable()
 export class MailService {
   private readonly logger = new Logger(MailService.name);
 
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(@Inject('RESEND_CLIENT') private readonly resend: Resend) {}
 
   async sendOrderConfirmation(email: string, cart: any[], total: number) {
     try {
@@ -21,7 +21,8 @@ export class MailService {
 
       const urlTuQR = 'https://tacna-market-bucket.s3.us-east-2.amazonaws.com/branding/yape-HD.png';
 
-      await this.mailerService.sendMail({
+      const response = await this.resend.emails.send({
+        from: 'Tacna Market <ventas@tacna-market.shop>',
         to: email,
         subject: 'Confirmación de Compra - Tacna Market 🛒',
         html: `
@@ -54,7 +55,11 @@ export class MailService {
         `,
       });
 
-      this.logger.log(`Correo de confirmación enviado a: ${email}`);
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+
+      this.logger.log(`Correo de confirmación enviado a: ${email} (ID: ${response.data?.id})`);
 
     } catch (error) {
       this.logger.error(`Error al enviar correo a ${email}:`, error instanceof Error ? error.message : String(error));
