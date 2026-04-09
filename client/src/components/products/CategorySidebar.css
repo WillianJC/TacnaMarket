@@ -1,25 +1,27 @@
 .category-sidebar {
-  width: 180px;
-  background-color: #f9fafb;
-  border-right: 1px solid #e5e7eb;
+  width: 175px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8e5;
   padding: 16px 8px;
   overflow-y: auto;
 }
 
 .category-sidebar__title {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #111827;
-  margin: 0 0 12px;
+  color: #0d1f1a;
+  margin: 0 0 10px;
   padding: 0 8px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .category-sidebar__list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -28,26 +30,65 @@
 .category-sidebar__button {
   display: block;
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  padding: 9px 12px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
   background: transparent;
-  color: #6b7280;
-  font-size: 0.9rem;
+  color: #6b7c75;
+  font-size: 0.875rem;
   font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   text-align: left;
 }
 
 .category-sidebar__button:hover {
-  background-color: #e5e7eb;
-  color: #111827;
+  background-color: #f0fdf4;
+  color: #059669;
+  border-color: #a7f3d0;
 }
 
 .category-sidebar__button.active {
   background-color: #d1fae5;
   color: #059669;
-  border-color: #059669;
-  font-weight: 600;
+  border-color: #6ee7b7;
+  font-weight: 700;
+}
+
+/* ===== MOBILE: Horizontal scroll bar ===== */
+@media (max-width: 768px) {
+  .category-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8e5;
+    padding: 10px 12px;
+    overflow-y: visible;
+    overflow-x: visible;
+  }
+
+  .category-sidebar__title {
+    display: none;
+  }
+
+  .category-sidebar__list {
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .category-sidebar__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-sidebar__button {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border-radius: 999px;
+  }
 }
