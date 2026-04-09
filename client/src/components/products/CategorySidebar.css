@@ -15,7 +15,7 @@
   padding: 0 8px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .category-sidebar__list {
@@ -37,7 +37,7 @@
   color: #6b7c75;
   font-size: 0.875rem;
   font-weight: 500;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;

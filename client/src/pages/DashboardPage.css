@@ -48,7 +48,7 @@
 .content__title {
   font-size: 1.8rem;
   font-weight: 800;
-  font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #0d1f1a;
   margin: 0 0 4px;
   letter-spacing: -0.02em;
@@ -104,7 +104,7 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 0.875rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
   box-shadow: 0 2px 8px rgba(5, 150, 105, 0.30);
   white-space: nowrap;
@@ -219,7 +219,7 @@
   font-size: 1.15rem;
   font-weight: 800;
   color: #059669;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .product-card__add-btn {
@@ -232,7 +232,7 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 0.8rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
