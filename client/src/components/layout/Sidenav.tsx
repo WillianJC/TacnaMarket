@@ -4,7 +4,7 @@ import {
   HomeIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
-  TruckIcon, // Cambiado para que coincida con la moto de la simulación
+  TruckIcon,
   ArrowLeftStartOnRectangleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -21,20 +21,23 @@ const navItems: NavItem[] = [
   { label: 'Inicio', icon: HomeIcon, path: '/dash/home' },
   { label: 'Productos', icon: ShoppingBagIcon, path: '/dash/products' },
   { label: 'Carrito', icon: ShoppingCartIcon, path: '/dash/cart' },
-  { label: 'Pedidos', icon: TruckIcon, path: '/dash/orders' }, // CORREGIDO: ahora apunta a /dash/orders
+  { label: 'Pedidos', icon: TruckIcon, path: '/dash/orders' },
 ];
 
 export default function Sidenav() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <aside className={`sidenav${collapsed ? ' sidenav--collapsed' : ''}`}>
-      {/* Botón de colapsar */}
-      <button className="sidenav__toggle" onClick={() => setCollapsed((c) => !c)}>
-        {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </button>
+      {/* Botón de colapsar — solo en desktop */}
+      {!isMobile && (
+        <button className="sidenav__toggle" onClick={() => setCollapsed((c) => !c)}>
+          {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </button>
+      )}
 
       {/* Logo */}
       <div className="sidenav__logo" onClick={() => navigate('/dash/home')} style={{cursor: 'pointer'}}>
@@ -46,17 +49,18 @@ export default function Sidenav() {
         {navItems.map(({ label, icon: Icon, path }) => (
           <div 
             key={label} 
-            className={`sidenav__item ${location.pathname === path ? 'active' : ''}`} // Ahora la comparación será exacta
+            className={`sidenav__item ${location.pathname === path ? 'active' : ''}`}
             onClick={() => navigate(path)}
             style={{ cursor: 'pointer' }}
           >
             <Icon className="sidenav__item-icon" />
-            {!collapsed && <span className="sidenav__item-label">{label}</span>}
+            {/* En desktop: ocultar si collapsed. En móvil: siempre visible via CSS */}
+            {(!collapsed || isMobile) && <span className="sidenav__item-label">{label}</span>}
           </div>
         ))}
       </nav>
 
-      {/* Footer / Cerrar Sesión */}
+      {/* Footer / Cerrar Sesión — solo desktop */}
       <div className="sidenav__footer">
         <div 
           className="sidenav__item sidenav__item--signout" 

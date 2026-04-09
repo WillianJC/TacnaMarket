@@ -1,40 +1,43 @@
 :root {
-  --dh-bg: #f9fafb;
+  --dh-bg: #f4f6f5;
   --dh-card-bg: #ffffff;
-  --dh-border: #e5e7eb;
-  --dh-text-title: #111827;
-  --dh-text-primary: #374151;
-  --dh-placeholder: #9ca3af;
+  --dh-border: #e2e8e5;
+  --dh-text-title: #0d1f1a;
+  --dh-text-primary: #2d4039;
+  --dh-placeholder: #a1b5ad;
   --dh-accent: #059669;
   --dh-accent-focus: #10b981;
   --dh-accent-soft: #d1fae5;
-  --dh-shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --dh-shadow-main: 0 18px 45px rgba(15, 23, 42, 0.14);
+  --dh-shadow-soft: 0 4px 12px rgba(5, 150, 105, 0.06);
+  --dh-shadow-main: 0 12px 32px rgba(5, 150, 105, 0.14);
 }
 
 .dash-home {
   display: flex;
   height: 100vh;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .dash-home__main {
   flex: 1;
   background-color: var(--dh-bg);
-  padding: 48px;
+  padding: 44px;
   overflow-y: auto;
 }
 
 /* Header */
 .dash-home__header {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .dash-home__title {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 800;
+  font-family: 'Roboto', sans-serif;
   color: var(--dh-text-title);
   margin-bottom: 16px;
+  letter-spacing: -0.03em;
 }
 
 .dash-home__username {
@@ -43,55 +46,55 @@
 
 .dash-home__divider {
   height: 1px;
-  background-color: var(--dh-border);
+  background: linear-gradient(90deg, var(--dh-border), transparent);
   border: none;
 }
 
 /* Cards grid */
 .dash-home__cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .dash-home__card {
   background-color: var(--dh-card-bg);
-  border: 1px solid var(--dh-border);
-  border-radius: 12px;
-  padding: 24px 16px; /* Bajamos un poco el padding lateral */
+  border: 1.5px solid var(--dh-border);
+  border-radius: 16px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   box-shadow: var(--dh-shadow-soft);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .dash-home__card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   box-shadow: var(--dh-shadow-main);
-  border-color: var(--dh-accent-focus);
+  border-color: #6ee7b7;
 }
 
 .dash-home__card-title {
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--dh-text-title);
   text-align: center;
+  line-height: 1.4;
 }
 
 /* Image Container */
 .dash-home__card-img {
   width: 100%;
-  /* Bajamos el aspect ratio para que el cuadro sea más "chato" y obligue al dibujo a verse más grande */
-  aspect-ratio: 2.5 / 1; 
+  aspect-ratio: 2.5 / 1;
   height: auto;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
   border: 2px dashed var(--dh-border);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  display: flex; /* Cambiamos a flex para centrar bien */
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 !important;
@@ -99,29 +102,61 @@
   transition: all 0.2s ease;
 }
 
-/* Ajuste de la imagen */
+.dash-home__card:hover .dash-home__card-img {
+  border-style: solid;
+  border-color: #a7f3d0;
+}
+
 .dash-home__card-image-file {
-  /* Aquí está el truco: le damos más del 100% para ignorar los bordes blancos de la foto */
-  width: 130% !important; 
+  width: 130% !important;
   height: 130% !important;
-  /* 'contain' suele funcionar mejor con estas ilustraciones para que no se corten */
-  object-fit: contain; 
+  object-fit: contain;
   display: block;
   margin: 0;
   transition: transform 0.3s ease;
 }
 
-/* Para que el zoom del hover no rompa el invento */
 .dash-home__card:hover .dash-home__card-image-file {
-  transform: scale(1.1); 
+  transform: scale(1.08);
 }
 
-.dash-home__card:hover .dash-home__card-image-file {
-  transform: scale(1.05); /* Efecto de zoom suave al pasar el mouse */
-}
-
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .dash-home__main {
-    padding: 24px;
+    padding: 24px 16px;
+    padding-bottom: calc(64px + 24px);
+  }
+
+  .dash-home__title {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .dash-home__cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dash-home__card {
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .dash-home__card-title {
+    text-align: left;
+    font-size: 0.95rem;
+    order: 2;
+    flex: 1;
+  }
+
+  .dash-home__card-img {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    aspect-ratio: unset;
+    border-radius: 10px;
+    order: 1;
   }
 }

@@ -1,103 +1,126 @@
 .orders-layout {
   display: flex;
   height: 100vh;
-  background-color: #f9fafb;
+  background-color: #f4f6f5;
+  font-family: 'Roboto', sans-serif;
 }
 
 .orders-main {
   flex: 1;
-  padding: 40px;
+  padding: 36px 40px;
   overflow-y: auto;
 }
 
 .orders-header h1 {
-  font-size: 2.5rem;
-  font-family: 'Indie Flower', cursive; 
+  font-size: 1.8rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  color: #0d1f1a;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.orders-subtitle {
+  color: #6b7c75;
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+.orders-header hr {
+  border: none;
+  border-top: 1px solid #e2e8e5;
+  margin: 0 0 24px;
 }
 
 .orders-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 30px;
-  margin-top: 30px;
-  background: #eef2f3;
-  padding: 30px;
-  border-radius: 15px;
-  border: 1px solid #ccc;
+  gap: 24px;
+  margin-top: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
 }
 
 .status-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .order-info-card {
   background: white;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #999;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8e5;
   text-align: center;
-  z-index: 5; /* Asegura visibilidad */
+  box-shadow: 0 2px 8px rgba(13, 31, 26, 0.06);
 }
 
 .repartidor-tag {
-  font-weight: bold;
-  color: #666;
-  border-bottom: 1px solid #eee;
+  font-weight: 700;
+  color: #6b7c75;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #e2e8e5;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 /* Estilo de los pasos */
 .step-item {
   position: relative;
   padding-left: 30px;
-  margin-bottom: 30px;
-  color: #999;
+  margin-bottom: 28px;
+  color: #a1b5ad;
   transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .step-item.active {
   color: #059669;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .step-dot {
   position: absolute;
   left: 0;
   top: 5px;
-  width: 15px;
-  height: 15px;
-  background: #ccc;
+  width: 14px;
+  height: 14px;
+  background: #d1fae5;
+  border: 2px solid #a7f3d0;
   border-radius: 50%;
 }
 
 .step-item.active .step-dot {
   background: #059669;
-  box-shadow: 0 0 10px rgba(5, 150, 105, 0.5);
+  border-color: #059669;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.4);
 }
 
 .step-line {
   position: absolute;
-  left: 7px;
-  top: 25px;
+  left: 6px;
+  top: 22px;
   width: 2px;
-  height: 30px;
-  background: #ccc;
+  height: 26px;
+  background: #d1fae5;
 }
 
-/* Contenedor del Mapa - Ajustado para Iframe */
+/* Contenedor del Mapa */
 .map-container {
   position: relative;
-  min-height: 450px;
-  border-radius: 10px;
-  border: 2px solid #999;
+  min-height: 420px;
+  border-radius: 14px;
+  border: 2px solid #e2e8e5;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(13, 31, 26, 0.08);
 }
 
-/* Estilo para que el iframe ocupe todo el fondo */
 .map-container iframe {
   position: absolute;
   top: 0;
@@ -111,13 +134,14 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: rgba(255,255,255,0.9);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 12px;
-  z-index: 20; /* Por encima de todo */
-  font-weight: bold;
-  border: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  z-index: 20;
+  font-weight: 700;
+  border: 1px solid #e2e8e5;
+  color: #059669;
 }
 
 /* Animación de la Motito sobre el Mapa */
@@ -125,19 +149,17 @@
   position: absolute;
   top: 40%;
   left: 10%;
-  width: 85px; /* Un poco más grande para que se note el detalle */
-  z-index: 15; 
-  pointer-events: none; 
+  width: 85px;
+  z-index: 15;
+  pointer-events: none;
   transition: all 0.5s ease;
 }
 
 .moto-delivery img {
   width: 100%;
-  /* Quitamos el background white y padding para que sea transparente */
-  background: transparent; 
-  /* Sombra tipo "drop-shadow" para que se despegue del mapa satelital */
+  background: transparent;
   filter: drop-shadow(4px 6px 8px rgba(0,0,0,0.5));
-  transition: transform 0.3s ease; /* Para que el giro de la moto sea suave y no brusco */
+  transition: transform 0.3s ease;
 }
 
 .moto-delivery.moving {
@@ -145,53 +167,57 @@
 }
 
 .moto-delivery.stopped {
-  left: 75%; 
+  left: 75%;
   top: 45%;
-  /* Brillo verde cuando llega a destino */
   filter: drop-shadow(0 0 15px #10b981) drop-shadow(4px 6px 8px rgba(0,0,0,0.5));
 }
 
 @keyframes rutaMoto {
-  0% { 
-    left: 10%; top: 40%; transform: rotate(0deg); 
-  }
-  /* 1. Avanza por la primera calle */
-  25% { 
-    left: 30%; top: 40%; transform: rotate(0deg); 
-  }
-  /* 2. Dobla en una esquina (hacia abajo) */
-  35% { 
-    left: 30%; top: 60%; transform: rotate(90deg); 
-  }
-  /* 3. Sigue por la otra avenida */
-  60% { 
-    left: 60%; top: 60%; transform: rotate(0deg); 
-  }
-  /* 4. Sube un poco para llegar al destino final */
-  85% { 
-    left: 60%; top: 45%; transform: rotate(-90deg); 
-  }
-  /* 5. Destino Final */
-  100% { 
-    left: 75%; top: 45%; transform: rotate(0deg); 
-  }
+  0%   { left: 10%; top: 40%; transform: rotate(0deg); }
+  25%  { left: 30%; top: 40%; transform: rotate(0deg); }
+  35%  { left: 30%; top: 60%; transform: rotate(90deg); }
+  60%  { left: 60%; top: 60%; transform: rotate(0deg); }
+  85%  { left: 60%; top: 45%; transform: rotate(-90deg); }
+  100% { left: 75%; top: 45%; transform: rotate(0deg); }
 }
 
 .buen-provecho {
   text-align: center;
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: #059669;
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 16px;
+  padding: 12px;
   background: white;
-  border-radius: 8px;
-  border: 2px solid #059669;
+  border-radius: 10px;
+  border: 2px solid #a7f3d0;
+  font-family: 'Roboto', sans-serif;
   animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
   100% { transform: scale(1); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .orders-main {
+    padding: 20px 16px;
+    padding-bottom: calc(64px + 20px);
+  }
+
+  .orders-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .orders-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .map-container {
+    min-height: 280px;
+  }
 }
